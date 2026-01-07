@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:3000
+@json = application/json
+
+### Criar administrador - POST /admins
+POST {{baseUrl}}/admins
+Content-Type: {{json}}
+
+{
+  "nome": "Test Admin",
+  "email": "testadmin@example.com",
+  "senha": "Password123!"
+}
+
+### Listar administradores - GET /admins
+GET {{baseUrl}}/admins
+Accept: application/json
+
+### Listar administradores - GET /admins/:id
+GET {{baseUrl}}/admins/2
+Accept: application/json
+
+### Tentar criar com email duplicado (deve retornar erro 400)
+POST {{baseUrl}}/admins
+Content-Type: {{json}}
+
+{
+  "nome": "Test Admin Duplicate",
+  "email": "testadmin@example.com",
+  "senha": "Password123!"
+}
+### Deletar administrador - DELETE /admins/:id
+DELETE {{baseUrl}}/admins/2

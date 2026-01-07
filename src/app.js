@@ -4,9 +4,9 @@ const cors = require('cors');
 // Importa o middleware que permite o compartilhamento de recursos entre diferentes origens (Cross-Origin Resource Sharing)
 const helmet = require('helmet');
 // Importa o middleware de segurança que adiciona cabeçalhos HTTP para proteger contra ataques comuns
-const userRoutes = require('./routes/userRoutes');
-// Importa as rotas relacionadas aos usuários
-const errorMiddleware = require('./middlewares/errorMiddleware');
+const adminRoutes = require('./routes/adminRoutes');
+// Importa as rotas relacionadas aos administradores
+const errorMiddleware = require('./middlewares/errorMiddlewares');
 // Importa o middleware para tratamento centralizado de erros
 const app = express();
 // Cria uma instância do aplicativo Express
@@ -18,8 +18,8 @@ app.use(helmet());
 app.use(express.json());
 // Permite que o servidor interprete requisições com corpo em formato JSON
 // Rotas da aplicação
-app.use('/users', userRoutes);
-// Define que todas as requisições iniciadas com /users serão encaminhadas para o arquivo userRoutes
+app.use('/admins', adminRoutes);
+// Define que todas as requisições iniciadas com /admins serão encaminhadas para o arquivo adminRoutes.js
 // Middleware de tratamento de erros (deve ser adicionado depois das rotas)
 app.use(errorMiddleware);
 // Middleware que captura e trata erros, enviando respostas ao cliente
