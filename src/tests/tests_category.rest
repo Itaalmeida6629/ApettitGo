@@ -1,0 +1,88 @@
+@baseUrl = http://localhost:3000
+
+### =====================================
+### Criar categoria com descrição
+### =====================================
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "nome": "Bebidas",
+  "descricao": "Bebidas em geral, quentes ou geladas"
+}
+
+### =====================================
+### Criar categoria duplicada (erro esperado)
+### =====================================
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "nome": "Bebidas",
+  "descricao": "Outra descrição"
+}
+
+### =====================================
+### Criar categoria sem nome (erro esperado)
+### =====================================
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "descricao": "Categoria inválida"
+}
+
+### =====================================
+### Listar todas as categorias
+### =====================================
+GET {{baseUrl}}/categories
+
+### =====================================
+### Buscar categoria por ID
+### =====================================
+GET {{baseUrl}}/categories/1
+
+### =====================================
+### Buscar categoria inexistente (erro esperado)
+### =====================================
+GET {{baseUrl}}/categories/999
+
+### =====================================
+### Atualizar nome e descrição da categoria
+### =====================================
+PUT {{baseUrl}}/categories/1
+Content-Type: application/json
+
+{
+  "nome": "Bebidas Geladas",
+  "descricao": "Bebidas servidas frias"
+}
+
+### =====================================
+### Atualizar somente descrição
+### =====================================
+PUT {{baseUrl}}/categories/1
+Content-Type: application/json
+
+{
+  "descricao": "Nova descrição sem alterar o nome"
+}
+
+### =====================================
+### Atualizar categoria sem dados (erro esperado)
+### =====================================
+PUT {{baseUrl}}/categories/1
+Content-Type: application/json
+
+{
+}
+
+### =====================================
+### Deletar categoria
+### =====================================
+DELETE {{baseUrl}}/categories/1
+
+### =====================================
+### Deletar categoria inexistente (erro esperado)
+### =====================================
+DELETE {{baseUrl}}/categories/999

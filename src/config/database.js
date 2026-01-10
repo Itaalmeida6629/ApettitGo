@@ -1,5 +1,5 @@
-const mysql = require("mysql2/promise");
-require("dotenv").config();
+const mysql = require("mysql2/promise")
+require("dotenv").config()
 // Cria a conexão com o banco
 const pool = mysql.createPool({
     host: process.env.DB_HOST, // Endereço do servidor de banco
@@ -10,4 +10,4 @@ const pool = mysql.createPool({
     connectionLimit: 10, // Limita o número máximo de conexões simultâneas
     queueLimit: 0 // Número máximo de requisições enfileiradas (0 = sem limite)
 });
-module.exports = pool;
+module.exports = pool

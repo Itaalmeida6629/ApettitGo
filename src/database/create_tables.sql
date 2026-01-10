@@ -47,7 +47,8 @@ CREATE TABLE Pedidos (
 
 CREATE TABLE Categorias (
     id_categoria INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Item_Cardapio (

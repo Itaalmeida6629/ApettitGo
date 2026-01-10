@@ -1,7 +1,7 @@
-require('dotenv').config(); // Carrega variáveis de ambiente
-const app = require('./src/app'); // Importa o app já configurado (rotas, middlewares e tratamento de erros)
-const PORT = process.env.PORT || 3000;
-// Inicia o servidor Express para escutar na porta definida
+require('dotenv').config()
+const app = require('./src/app')
+const PORT = process.env.PORT || 3000
+
 app.listen(PORT, () => {
- console.log(`Servidor rodando na porta ${PORT}`);
-});
+ console.log(`Servidor rodando na porta ${PORT}`)
+})
