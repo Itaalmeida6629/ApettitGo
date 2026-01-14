@@ -4,6 +4,9 @@ const AdminController = require('../controllers/adminController')
 // Importa o controller responsável por gerenciar administradores
 const router = express.Router()
 // Cria uma nova instância de roteador do Express
+
+// Rota para login do administrador
+router.post('/login', AdminController.login)
 // Rota para criar um novo administrador
 router.post('/', AdminController.create)
 // Rota para listar todos os administradores

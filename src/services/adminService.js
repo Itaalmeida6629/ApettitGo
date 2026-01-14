@@ -16,46 +16,25 @@ class AdminService {
 
     static async createAdmin(data) {
         const { nome, email, senha } = data
-        if (!nome || !email || !senha) {
-            throw new Error('Campos obrigatórios faltando (nome, email, senha)')
-        }
-
-        const nomeError = validateString(nome, { min: 3, max: 100, fieldName: 'Nome' })
-        if (nomeError) throw new Error(nomeError)
-
-        if (!validateEmail(email)) {
-            throw new Error('Email inválido')
-        }
-
-        const senhaError = validateString(senha, { min: 6, max: 255, fieldName: 'Senha' })
-        if (senhaError) throw new Error(senhaError)
-
+        if (!nome || !email || !senha) throw new Error('Campos obrigatórios faltando (nome, email, senha)')
+        if (!validateString(nome, 3, 100)) throw new Error('Nome inválido')
+        if (!validateEmail(email)) throw new Error('Email inválido')
+        if (!validateString(senha, 6, 255)) throw new Error('Senha inválida')
         const existing = await AdminModel.findByEmail(email)
         if (existing) throw new Error('Email já cadastrado')
-
         const senha_hash = await bcrypt.hash(senha, 10)
         return AdminModel.create({ nome, email, senha_hash })
     }
 
     static async updateAdmin(id, data) {
-        const payload = {}
-        if (data.nome) {
-            const nomeError = validateString(data.nome, { min: 3, max: 100, fieldName: 'Nome' })
-            if (nomeError) throw new Error(nomeError)
-            payload.nome = data.nome
-        }
+        const payload = { ...data }
 
-        if (data.email) {
-            if (!validateEmail(data.email)) {
-                throw new Error('Email inválido')
-            }
-            payload.email = data.email
-        }
-
-        if (data.senha) {
-            const senhaError = validateString(data.senha, { min: 6, max: 255, fieldName: 'Senha' })
-            if (senhaError) throw new Error(senhaError)
-            payload.senha_hash = await bcrypt.hash(data.senha, 10)
+        if (payload.nome && !validateString(payload.nome, 3, 100)) throw new Error('Nome inválido')
+        if (payload.email && !validateEmail(payload.email)) throw new Error('Email inválido')
+        if (payload.senha) {
+            if (!validateString(payload.senha, 6, 255)) throw new Error('Senha inválida')
+            payload.senha_hash = await bcrypt.hash(payload.senha, 10)
+            delete payload.senha
         }
 
         await AdminModel.update(id, payload)

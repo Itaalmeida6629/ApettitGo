@@ -15,14 +15,19 @@ class CategoryService {
     static async createCategory(data) {
         const { nome, descricao } = data
         if (!nome || !descricao) throw new Error('Campos obrigatórios faltando (nome, descricao)')
-        if (!validateString(nome, 1, 100)) throw new Error('Nome inválido')
-        if (!validateString(descricao, 1, 255)) throw new Error('Descrição inválida')
+        const erroNome = validateString(nome, { min: 1, max: 100, fieldName: 'nome' })
+        if (erroNome) throw new Error(erroNome)
+        const erroDescricao = validateString(descricao, { min: 1, max: 255, fieldName: 'descricao' })
+        if (erroDescricao) throw new Error(erroDescricao)
+        const categoriaExistente = await CategoryModel.findByName(nome)
+        if (categoriaExistente) throw new Error('Já existe uma categoria com esse nome')
         const id = await CategoryModel.create({ nome, descricao })
         return id
     }
 
     static async updateCategory(id, data) {
         const payload = { ...data }
+
         if (payload.nome && !validateString(payload.nome, 1, 100)) throw new Error('Nome inválido')
         if (payload.descricao && !validateString(payload.descricao, 1, 255)) throw new Error('Descrição inválida')
         await CategoryModel.update(id, payload)

@@ -20,6 +20,7 @@ class CategoryController {
             res.status(404).json({ error: error.message })
         }
     }
+
     // Cria uma nova categoria
     static async create(req, res) {
         try {
@@ -29,6 +30,7 @@ class CategoryController {
             res.status(400).json({ error: error.message })
         }
     }
+
     // Atualiza uma categoria existente
     static async update(req, res) {
         try {
@@ -38,6 +40,7 @@ class CategoryController {
             res.status(400).json({ error: error.message })
         }
     }
+
     // Deleta uma categoria
     static async delete(req, res) {
         try {

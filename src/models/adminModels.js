@@ -34,8 +34,11 @@ class AdminModel {
         const fields = []
         const values = []
         if (data.nome) { fields.push('nome = ?'); values.push(data.nome) }
+
         if (data.email) { fields.push('email = ?'); values.push(data.email) }
+
         if (data.senha_hash) { fields.push('senha_hash = ?'); values.push(data.senha_hash) }
+
         if (fields.length === 0) return
         const sql = `UPDATE Administrador SET ${fields.join(', ')} WHERE id_admin = ?`
         values.push(id)

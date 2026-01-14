@@ -1,0 +1,57 @@
+@baseUrl = http://localhost:3000/items
+@json = application/json
+
+############################################
+### 🔹 LISTAR TODOS OS ITENS
+GET {{baseUrl}}
+Accept: {{json}}
+
+############################################
+### 🔹 BUSCAR ITEM POR ID
+GET {{baseUrl}}/1
+Accept: {{json}}
+
+############################################
+### 🔹 CRIAR NOVO ITEM
+POST {{baseUrl}}
+Content-Type: {{json}}
+
+{
+  "nome": "Hambúrguer Artesanal Triplo",
+  "descricao": "Hambúrguer 180g com queijo e bacon",
+  "preco": 29.90,
+  "id_categoria": 1
+}
+
+############################################
+### 🔹 ATUALIZAR ITEM (NOME E PREÇO)
+PUT {{baseUrl}}/1
+Content-Type: {{json}}
+
+{
+  "nome": "Hambúrguer Artesanal Duplo",
+  "preco": 34.90
+}
+
+############################################
+### 🔹 ATUALIZAR ITEM (DESCRIÇÃO)
+PUT {{baseUrl}}/1
+Content-Type: {{json}}
+
+{
+  "descricao": "Hambúrguer duplo 180g com queijo cheddar"
+}
+
+############################################
+### 🔹 ATUALIZAR ITEM (CATEGORIA)
+PUT {{baseUrl}}/1
+Content-Type: {{json}}
+
+{
+  "id_categoria": 2
+}
+
+############################################
+### 🔹 DELETAR ITEM
+DELETE {{baseUrl}}/1
+Accept: {{json}}
