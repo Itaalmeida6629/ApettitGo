@@ -27,22 +27,26 @@ class ItemService {
     }
 
     static async updateItem(id, data) {
+        const notFind = await ItemModel.findById(id)
+        if (!notFind) throw new Error('Item não encontrado')
         const payload = { ...data }
-
-        if (payload.nome && !validateString(payload.nome, 1, 100)) throw new Error('Nome inválido')
-        if (payload.descricao && !validateString(payload.descricao, 1, 255)) throw new Error('Descrição inválida')
-        if (payload.preco !== undefined) {
-            if (typeof payload.preco !== 'number' || payload.preco < 0) throw new Error('Preço inválido')
+        if (Object.keys(payload).length === 0) throw new Error('Nenhum dado fornecido para atualização')
+        if (payload.nome !== undefined) {
+            const error = validateString(payload.nome, { min: 1, max: 100, fieldName: 'nome' })
+            if (error) throw new Error(error)
         }
 
-        if (payload.id_categoria !== undefined) {
-            if (!Number.isInteger(payload.id_categoria)) throw new Error('Categoria inválida')
+        if (payload.descricao !== undefined) {
+            const error = validateString(payload.descricao, { min: 1, max: 255, fieldName: 'descricao' })
+            if (error) throw new Error(error)
         }
 
         await ItemModel.update(id, payload)
     }
 
     static async deleteItem(id) {
+        const notFind = await ItemModel.findById(id)
+        if (!notFind) throw new Error('Item não encontrado')
         await ItemModel.delete(id)
     }
 }

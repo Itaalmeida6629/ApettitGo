@@ -6,9 +6,9 @@ POST {{baseUrl}}/admins
 Content-Type: {{json}}
 
 {
-  "nome": "Test Admin",
-  "email": "testadmin@example.com",
-  "senha": "Password123!"
+  "nome": "Itaa",
+  "email": "ita@yahoo.com",
+  "senha": "123456"
 }
 
 ### Listar administradores - GET /admins
@@ -16,7 +16,7 @@ GET {{baseUrl}}/admins
 Accept: application/json
 
 ### Listar administradores - GET /admins/:id
-GET {{baseUrl}}/admins/2
+GET {{baseUrl}}/admins/1
 Accept: application/json
 
 ### Tentar criar com email duplicado (deve retornar erro 400)
@@ -25,8 +25,18 @@ Content-Type: {{json}}
 
 {
   "nome": "Test Admin Duplicate",
-  "email": "testadmin@example.com",
+  "email": "ita@yahoo.com",
   "senha": "Password123!"
 }
+
+### Atualizar administrador - PUT /admins/:id
+PUT {{baseUrl}}/admins/1
+Content-Type: {{json}}
+
+{
+  "nome": "Updated Test Admin",
+  "email": "updatedtestadmin@example.com"
+}
+
 ### Deletar administrador - DELETE /admins/:id
 DELETE {{baseUrl}}/admins/2

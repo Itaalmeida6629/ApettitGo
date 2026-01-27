@@ -8,7 +8,7 @@ Accept: {{json}}
 
 ############################################
 ### 🔹 BUSCAR ITEM POR ID
-GET {{baseUrl}}/1
+GET {{baseUrl}}/2
 Accept: {{json}}
 
 ############################################
@@ -17,7 +17,7 @@ POST {{baseUrl}}
 Content-Type: {{json}}
 
 {
-  "nome": "Hambúrguer Artesanal Triplo",
+  "nome": "Hambúrguer Artesanal ao",
   "descricao": "Hambúrguer 180g com queijo e bacon",
   "preco": 29.90,
   "id_categoria": 1
@@ -25,17 +25,17 @@ Content-Type: {{json}}
 
 ############################################
 ### 🔹 ATUALIZAR ITEM (NOME E PREÇO)
-PUT {{baseUrl}}/1
+PUT {{baseUrl}}/7
 Content-Type: {{json}}
 
 {
-  "nome": "Hambúrguer Artesanal Duplo",
+  "nome": "Hambúrguer Artesanal Ddao",
   "preco": 34.90
 }
 
 ############################################
 ### 🔹 ATUALIZAR ITEM (DESCRIÇÃO)
-PUT {{baseUrl}}/1
+PUT {{baseUrl}}/7
 Content-Type: {{json}}
 
 {
@@ -44,7 +44,7 @@ Content-Type: {{json}}
 
 ############################################
 ### 🔹 ATUALIZAR ITEM (CATEGORIA)
-PUT {{baseUrl}}/1
+PUT {{baseUrl}}/2
 Content-Type: {{json}}
 
 {
@@ -53,5 +53,5 @@ Content-Type: {{json}}
 
 ############################################
 ### 🔹 DELETAR ITEM
-DELETE {{baseUrl}}/1
+DELETE {{baseUrl}}/7
 Accept: {{json}}

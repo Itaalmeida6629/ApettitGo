@@ -1,0 +1,95 @@
+### =========================
+### CLIENTS - TESTES
+### =========================
+
+@baseUrl = http://localhost:3000
+@clientId = 2
+
+### Criar um novo cliente
+POST {{baseUrl}}/clients
+Content-Type: application/json
+
+{
+  "nome": "João da Silva",
+  "email": "joao.silva@email.com",
+  "senha": "senha123",
+  "telefone": "11999999999"
+}
+
+###
+
+### Criar cliente com email duplicado (erro esperado)
+POST {{baseUrl}}/clients
+Content-Type: application/json
+
+{
+  "nome": "João Duplicado",
+  "email": "joao.silva@email.com",
+  "senha": "senha123",
+  "telefone": "11888888888"
+}
+
+###
+
+### Listar todos os clientes
+GET {{baseUrl}}/clients
+
+###
+
+### Buscar cliente por ID
+GET {{baseUrl}}/clients/{{clientId}}
+
+###
+
+### Buscar cliente inexistente (erro esperado)
+GET {{baseUrl}}/clients/999999
+
+###
+
+### Atualizar cliente (nome e telefone)
+PUT {{baseUrl}}/clients/{{clientId}}
+Content-Type: application/json
+
+{
+  "nome": "João Silva Atualizado",
+  "telefone": "11977777777"
+}
+
+###
+
+### Atualizar cliente (email)
+PUT {{baseUrl}}/clients/{{clientId}}
+Content-Type: application/json
+
+{
+  "email": "joao.atualizado2@email.com"
+}
+
+###
+
+### Atualizar cliente (senha)
+PUT {{baseUrl}}/clients/{{clientId}}
+Content-Type: application/json
+
+{
+  "senha": "novaSenhaSegura123"
+}
+
+###
+
+### Atualizar cliente sem campos (erro esperado)
+PUT {{baseUrl}}/clients/{{clientId}}
+Content-Type: application/json
+
+{
+}
+
+###
+
+### Deletar cliente
+DELETE {{baseUrl}}/clients/{{clientId}}
+
+###
+
+### Buscar cliente deletado (erro esperado)
+GET {{baseUrl}}/clients/{{clientId}}

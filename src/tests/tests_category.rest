@@ -7,7 +7,7 @@ POST {{baseUrl}}/categories
 Content-Type: application/json
 
 {
-  "nome": "Bebidas",
+  "nome": "Doces",
   "descricao": "Bebidas em geral, quentes ou geladas"
 }
 
@@ -18,7 +18,7 @@ POST {{baseUrl}}/categories
 Content-Type: application/json
 
 {
-  "nome": "Bebidnas",
+  "nome": "Doces",
   "descricao": "Outra descrição"
 }
 
@@ -40,7 +40,7 @@ GET {{baseUrl}}/categories
 ### =====================================
 ### Buscar categoria por ID
 ### =====================================
-GET {{baseUrl}}/categories/1
+GET {{baseUrl}}/categories/6
 
 ### =====================================
 ### Buscar categoria inexistente (erro esperado)
@@ -50,18 +50,18 @@ GET {{baseUrl}}/categories/999
 ### =====================================
 ### Atualizar nome e descrição da categoria
 ### =====================================
-PUT {{baseUrl}}/categories/1
+PUT {{baseUrl}}/categories/6
 Content-Type: application/json
 
 {
-  "nome": "Bebidas Geladas",
+  "nome": "Doces",
   "descricao": "Bebidas servidas frias"
 }
 
 ### =====================================
 ### Atualizar somente descrição
 ### =====================================
-PUT {{baseUrl}}/categories/1
+PUT {{baseUrl}}/categories/6
 Content-Type: application/json
 
 {

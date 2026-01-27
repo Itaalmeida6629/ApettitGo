@@ -1,31 +1,29 @@
-const AdminService = require('../services/adminService')
-const bcrypt = require('bcrypt')
-const AdminModels = require('../models/adminModels')
+const clientService = require('../services/clientService')
+const clientModels = require('../models/clientModels')
 const validateLogin = require('../utils/validateLogin')
+const bcrypt = require('bcrypt')
 
-class AdminController {
+class ClientController {
     static async login(req, res) {
         try {
             if (!validateLogin(req.body)) {
                 return res.status(400).json({ error: 'Email e senha são obrigatórios' })
             }
-
             const { email, senha } = req.body
 
-            const admin = await AdminModels.findByEmail(email)
-            if (!admin) {
-                return res.status(401).json({ error: 'Administrador não encontrado' })
+            const client = await clientModels.findByEmail(email)
+            if (!client) {
+                return res.status(401).json({ error: 'Cliente não encontrado' })
             }
-
-            const senhaValida = await bcrypt.compare(senha, admin.senha_hash)
+            const senhaValida = await bcrypt.compare(senha, client.senha_hash)
             if (!senhaValida) {
                 return res.status(401).json({ error: 'Senha inválida' })
             }
-
             res.json({
-                id: admin.id,
-                nome: admin.nome,
-                email: admin.email
+                id: client.id,
+                nome: client.nome,
+                email: client.email,
+                telefone: client.telefone
             })
         } catch (err) {
             console.error(err)
@@ -33,55 +31,55 @@ class AdminController {
         }
     }
 
-    // Lista todos os administradores
+    // Lista todos os clientes
     static async getAll(req, res) {
         try {
-            const admins = await AdminService.findAllAdmins()
-            res.json(admins)
+            const clients = await clientService.findAllClients()
+            res.json(clients)
         } catch (error) {
             res.status(500).json({ error: error.message })
         }
     }
 
-    // Busca administrador por ID
+    // Busca cliente por ID
     static async getById(req, res) {
         try {
-            const admin = await AdminService.findAdminById(req.params.id)
-            res.json(admin)
+            const client = await clientService.findClientById(req.params.id)
+            res.json(client)
         } catch (error) {
             res.status(404).json({ error: error.message })
         }
     }
 
-    // Cria um novo administrador
+    // Cria um novo cliente
     static async create(req, res) {
         try {
-            const admin = await AdminService.createAdmin(req.body)
-            res.status(201).json({ message: 'Administrador criado com sucesso.', admin })
+            const id = await clientService.createClient(req.body)
+            res.status(201).json({ message: 'Cliente criado com sucesso.', id })
         } catch (error) {
             res.status(400).json({ error: error.message })
         }
     }
 
-    // Atualiza um administrador existente
+    // Atualiza um cliente existente
     static async update(req, res) {
         try {
-            await AdminService.updateAdmin(req.params.id, req.body)
-            res.json({ message: 'Administrador atualizado com sucesso.' })
+            await clientService.updateClient(req.params.id, req.body)
+            res.json({ message: 'Cliente atualizado com sucesso.' })
         } catch (error) {
             res.status(400).json({ error: error.message })
         }
     }
 
-    // Deleta um administrador
+    // Deleta um cliente
     static async delete(req, res) {
         try {
-            await AdminService.deleteAdmin(req.params.id)
-            res.json({ message: 'Administrador deletado com sucesso.' })
+            await clientService.deleteClient(req.params.id)
+            res.json({ message: 'Cliente deletado com sucesso.' })
         } catch (error) {
             res.status(400).json({ error: error.message })
         }
     }
 }
 
-module.exports = AdminController
+module.exports = ClientController

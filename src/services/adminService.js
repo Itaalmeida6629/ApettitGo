@@ -17,22 +17,36 @@ class AdminService {
     static async createAdmin(data) {
         const { nome, email, senha } = data
         if (!nome || !email || !senha) throw new Error('Campos obrigatórios faltando (nome, email, senha)')
-        if (!validateString(nome, 3, 100)) throw new Error('Nome inválido')
-        if (!validateEmail(email)) throw new Error('Email inválido')
-        if (!validateString(senha, 6, 255)) throw new Error('Senha inválida')
-        const existing = await AdminModel.findByEmail(email)
-        if (existing) throw new Error('Email já cadastrado')
+        const nomeNormalizado = nome.trim().toLowerCase()
+        const emailNormalizado = email.trim().toLowerCase()
+        const erroNome = validateString(nomeNormalizado, { min: 3, max: 100, fieldName: 'nome' })
+        if (erroNome) throw new Error(erroNome)
+        if (!validateEmail(emailNormalizado)) throw new Error('Email inválido')
+        const erroSenha = validateString(senha, { min: 6, max: 255, fieldName: 'senha' })
+        if (erroSenha) throw new Error(erroSenha)
+        const emailExistente = await AdminModel.findByEmail(emailNormalizado)
+        if (emailExistente) throw new Error('Email já cadastrado')
         const senha_hash = await bcrypt.hash(senha, 10)
-        return AdminModel.create({ nome, email, senha_hash })
+        return AdminModel.create({ nome: nomeNormalizado, email: emailNormalizado, senha_hash })
     }
 
     static async updateAdmin(id, data) {
+        const notFind = await AdminModel.findById(id)
+        if (!notFind) throw new Error('Administrador não encontrado')
         const payload = { ...data }
-
-        if (payload.nome && !validateString(payload.nome, 3, 100)) throw new Error('Nome inválido')
-        if (payload.email && !validateEmail(payload.email)) throw new Error('Email inválido')
+        if (Object.keys(payload).length === 0) throw new Error('Nenhum dado fornecido para atualização')
+        if (payload.nome !== undefined) {
+            const error = validateString(payload.nome, { min: 3, max: 100, fieldName: 'nome' })
+            if (error) throw new Error('Nome inválido')
+        }
+        if (payload.email !== undefined) {
+            if (!validateEmail(payload.email)) throw new Error('Email inválido')
+        }
+        const emailExistente = await AdminModel.findByEmail(payload.email)
+        if (emailExistente) throw new Error('Email já cadastrado')
         if (payload.senha) {
-            if (!validateString(payload.senha, 6, 255)) throw new Error('Senha inválida')
+            const error = validateString(payload.senha, { min: 6, max: 255, fieldName: 'senha' })
+            if (error) throw new Error('Senha inválida')
             payload.senha_hash = await bcrypt.hash(payload.senha, 10)
             delete payload.senha
         }
@@ -41,6 +55,8 @@ class AdminService {
     }
 
     static async deleteAdmin(id) {
+        const notFind = await AdminModel.findById(id)
+        if (!notFind) throw new Error('Administrador não encontrado')
         await AdminModel.delete(id)
     }
 }
