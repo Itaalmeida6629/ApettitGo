@@ -20,7 +20,7 @@ Content-Type: {{json}}
   "nome": "Hambúrguer Artesanal ao",
   "descricao": "Hambúrguer 180g com queijo e bacon",
   "preco": 29.90,
-  "id_categoria": 1
+  "id_categoria": 3
 }
 
 ############################################

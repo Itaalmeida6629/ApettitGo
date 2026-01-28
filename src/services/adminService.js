@@ -27,6 +27,7 @@ class AdminService {
         const emailExistente = await AdminModel.findByEmail(emailNormalizado)
         if (emailExistente) throw new Error('Email já cadastrado')
         const senha_hash = await bcrypt.hash(senha, 10)
+
         return AdminModel.create({ nome: nomeNormalizado, email: emailNormalizado, senha_hash })
     }
 
@@ -44,7 +45,7 @@ class AdminService {
         }
         const emailExistente = await AdminModel.findByEmail(payload.email)
         if (emailExistente) throw new Error('Email já cadastrado')
-        if (payload.senha) {
+        if (payload.senha !== undefined) {
             const error = validateString(payload.senha, { min: 6, max: 255, fieldName: 'senha' })
             if (error) throw new Error('Senha inválida')
             payload.senha_hash = await bcrypt.hash(payload.senha, 10)

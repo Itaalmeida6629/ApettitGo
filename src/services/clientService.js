@@ -27,6 +27,7 @@ class ClientService {
         const emailExistente = await clientModel.findByEmail(emailNormalizado)
         if (emailExistente) throw new Error('Email já cadastrado')
         const senhaHash = await bcrypt.hash(senha, 10)
+    
         return clientModel.create({ nome: nomeNormalizado, email: emailNormalizado, senha_hash: senhaHash, telefone })
     }
 
@@ -48,7 +49,7 @@ class ClientService {
             const error = validateString(payload.telefone, { min: 10, max: 15, fieldName: 'telefone' })
             if (error) throw new Error('Telefone inválido')
         }
-        if (payload.senha) {
+        if (payload.senha !== undefined) {
             const error = validateString(payload.senha, { min: 6, max: 255, fieldName: 'senha' })
             if (error) throw new Error('Senha inválida')
             payload.senha_hash = await bcrypt.hash(payload.senha, 10)

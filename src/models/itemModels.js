@@ -35,14 +35,12 @@ class ItemModel {
     static async update(id, data) {
         const fields = []
         const values = []
-        if (data.nome !== undefined) { fields.push('nome = ?'); values.push(data.nome) }
-
-        if (data.descricao !== undefined) { fields.push('descricao = ?'); values.push(data.descricao) }
-
-        if (data.preco !== undefined) { fields.push('preco = ?'); values.push(data.preco) }
-
-        if (data.id_categoria !== undefined) { fields.push('id_categoria = ?'); values.push(data.id_categoria) }
+        if (data.nome) { fields.push('nome = ?'); values.push(data.nome) }
+        if (data.descricao) { fields.push('descricao = ?'); values.push(data.descricao) }
+        if (data.preco) { fields.push('preco = ?'); values.push(data.preco) }
+        if (data.id_categoria) { fields.push('id_categoria = ?'); values.push(data.id_categoria) }
         if (fields.length === 0) return
+        
         const sql = `UPDATE Item_Cardapio SET ${fields.join(', ')} WHERE id_item = ?`
         values.push(id)
         await db.query(sql, values)

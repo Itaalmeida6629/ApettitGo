@@ -7,7 +7,7 @@ class ClientModel {
         return rows
     }
     // Busca um cliente pelo id
-    static async findByID(id) {
+    static async findById(id) {
         const [rows] = await db.query('SELECT id_cliente AS id, nome, email, telefone FROM Cliente WHERE id_cliente = ?', [id])
         return rows[0]
     }
@@ -35,6 +35,7 @@ class ClientModel {
         if (data.telefone) { fields.push('telefone = ?'); values.push(data.telefone) }
         if (data.senha_hash) { fields.push('senha_hash = ?'); values.push(data.senha_hash) }
         if (fields.length === 0) return
+
         const sql = `UPDATE Cliente SET ${fields.join(', ')} WHERE id_cliente = ?`
         values.push(id)
         await db.query(sql, values)

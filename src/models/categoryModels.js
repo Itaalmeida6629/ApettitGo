@@ -36,10 +36,9 @@ class CategoryModel {
         const fields = []
         const values = []
         if (data.nome) { fields.push('nome = ?'); values.push(data.nome) }
-
         if (data.descricao) { fields.push('descricao = ?'); values.push(data.descricao) }
-
         if (fields.length === 0) return
+
         const sql = `UPDATE Categoria SET ${fields.join(', ')} WHERE id_categoria = ?`
         values.push(id)
         await db.query(sql, values)

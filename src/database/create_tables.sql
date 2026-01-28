@@ -20,6 +20,7 @@ CREATE TABLE Endereco (
     numero VARCHAR(20) NOT NULL,
     bairro VARCHAR(100) NOT NULL,
     cidade VARCHAR(100) NOT NULL,
+    estado VARCHAR(100) NOT NULL,
     cep VARCHAR(20) NOT NULL,
     complemento VARCHAR(150),
     id_cliente INT NOT NULL,

@@ -5,7 +5,10 @@ const adminRoutes = require('./routes/adminRoutes')
 const categoryRoutes = require('./routes/categoryRoutes')
 const itemRoutes = require('./routes/itemRoutes')
 const clientRoutes = require('./routes/clientRoutes')
+const adressRoutes = require('./routes/adressRoutes')
 const errorMiddleware = require('./middlewares/errorMiddlewares')
+
+
 
 const app = express()
 
@@ -17,6 +20,7 @@ app.use('/admins', adminRoutes)
 app.use('/categories', categoryRoutes)
 app.use('/items', itemRoutes)
 app.use('/clients', clientRoutes)
+app.use('/addresses', adressRoutes)
 
 app.use(errorMiddleware)
 

@@ -22,8 +22,8 @@ class CategoryService {
         if (erroDescricao) throw new Error(erroDescricao)
         const categoriaExistente = await CategoryModel.findByName(nomeNormalizado)
         if (categoriaExistente) throw new Error('Já existe uma categoria com esse nome')
-        const id = await CategoryModel.create({ nome, descricao })
-        return id
+    
+        return CategoryModel.create({ nome: nomeNormalizado, descricao }) 
     }
 
     static async updateCategory(id, data) {

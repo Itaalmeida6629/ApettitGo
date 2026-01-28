@@ -4,6 +4,8 @@ const ClientController = require('../controllers/clientController')
 // Importa o controller responsável por gerenciar clientes
 const router = express.Router()
 // Cria uma nova instância de roteador do Express
+// Rota para logar um cliente
+router.post('/login', ClientController.login)
 // Rota para criar um novo cliente
 router.post('/', ClientController.create)
 // Rota para listar todos os clientes
