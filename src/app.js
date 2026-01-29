@@ -6,6 +6,8 @@ const categoryRoutes = require('./routes/categoryRoutes')
 const itemRoutes = require('./routes/itemRoutes')
 const clientRoutes = require('./routes/clientRoutes')
 const adressRoutes = require('./routes/adressRoutes')
+const paymentRoutes = require('./routes/paymentRoutes')
+const statusRoutes = require('./routes/statusRoutes')
 const errorMiddleware = require('./middlewares/errorMiddlewares')
 
 
@@ -21,6 +23,8 @@ app.use('/categories', categoryRoutes)
 app.use('/items', itemRoutes)
 app.use('/clients', clientRoutes)
 app.use('/addresses', adressRoutes)
+app.use('/payments', paymentRoutes)
+app.use('/statuses', statusRoutes)
 
 app.use(errorMiddleware)
 

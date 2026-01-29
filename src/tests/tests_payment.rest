@@ -1,0 +1,124 @@
+@baseUrl = http://localhost:3000/payments
+@json = application/json
+
+###
+# ==================================
+# LISTAR TODAS AS FORMAS DE PAGAMENTO
+# ==================================
+GET {{baseUrl}}
+Accept: {{json}}
+
+###
+# ==================================
+# BUSCAR POR ID (SUCESSO)
+# ==================================
+GET {{baseUrl}}/1
+Accept: {{json}}
+
+###
+# ==================================
+# BUSCAR POR ID (NÃO ENCONTRADO)
+# ==================================
+GET {{baseUrl}}/9999
+Accept: {{json}}
+
+###
+# ==================================
+# CRIAR FORMA DE PAGAMENTO (SUCESSO)
+# ==================================
+POST {{baseUrl}}
+Content-Type: {{json}}
+
+{
+  "forma_pagamento": "Pix"
+}
+
+###
+# ==================================
+# CRIAR (ERRO — CAMPO FALTANDO)
+# ==================================
+POST {{baseUrl}}
+Content-Type: {{json}}
+
+{
+}
+
+###
+# ==================================
+# CRIAR (ERRO — MENOS DE 3 CARACTERES)
+# ==================================
+POST {{baseUrl}}
+Content-Type: {{json}}
+
+{
+  "forma_pagamento": "ab"
+}
+
+###
+# ==================================
+# CRIAR (ERRO — DUPLICADO)
+# ==================================
+POST {{baseUrl}}
+Content-Type: {{json}}
+
+{
+  "forma_pagamento": "pix"
+}
+
+###
+# ==================================
+# ATUALIZAR (SUCESSO)
+# ==================================
+PUT {{baseUrl}}/2
+Content-Type: {{json}}
+
+{
+  "forma_pagamento": "Cartão débito"
+}
+
+###
+# ==================================
+# ATUALIZAR (ERRO — MENOS DE 3)
+# ==================================
+PUT {{baseUrl}}/1
+Content-Type: {{json}}
+
+{
+  "forma_pagamento": "x"
+}
+
+###
+# ==================================
+# ATUALIZAR (ERRO — BODY VAZIO)
+# ==================================
+PUT {{baseUrl}}/1
+Content-Type: {{json}}
+
+{
+
+}
+
+###
+# ==================================
+# ATUALIZAR (ID NÃO EXISTE)
+# ==================================
+PUT {{baseUrl}}/9999
+Content-Type: {{json}}
+
+{
+  "forma_pagamento": "Teste"
+}
+
+###
+# ==================================
+# DELETAR (SUCESSO)
+# ==================================
+DELETE {{baseUrl}}/1
+Accept: {{json}}
+
+###
+# ==================================
+# DELETAR (ID NÃO EXISTE)
+# ==================================
+DELETE {{baseUrl}}/9999
+Accept: {{json}}

@@ -18,7 +18,7 @@ POST {{baseUrl}}/categories
 Content-Type: application/json
 
 {
-  "nome": "Doces",
+  "nome": "Docs",
   "descricao": "Outra descrição"
 }
 

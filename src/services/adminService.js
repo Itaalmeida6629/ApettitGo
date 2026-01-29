@@ -4,6 +4,28 @@ const validateString = require('../utils/validateString')
 const bcrypt = require('bcrypt')
 
 class AdminService {
+    static async loginAdmin(data) {
+        const erroLogin = validateLogin(data)
+        if (erroLogin) throw new Error(erroLogin)
+        const emailNormalizado = data.email.trim().toLowerCase()
+        if (!validateEmail(emailNormalizado)) {
+            throw new Error('Email inválido')
+        }
+        const admin = await AdminModel.findByEmail(emailNormalizado)
+        if (!admin) {
+            throw new Error('Email ou senha inválidos')
+        }
+        const senhaValida = await bcrypt.compare(data.senha, admin.senha_hash)
+        if (!senhaValida) {
+            throw new Error('Email ou senha inválidos')
+        }
+        return {
+            id: admin.id_admin,
+            nome: admin.nome,
+            email: admin.email
+        }
+    }
+
     static async findAllAdmins() {
         return AdminModel.findAll()
     }
@@ -18,17 +40,16 @@ class AdminService {
         const { nome, email, senha } = data
         if (!nome || !email || !senha) throw new Error('Campos obrigatórios faltando (nome, email, senha)')
         const nomeNormalizado = nome.trim().toLowerCase()
-        const emailNormalizado = email.trim().toLowerCase()
         const erroNome = validateString(nomeNormalizado, { min: 3, max: 100, fieldName: 'nome' })
         if (erroNome) throw new Error(erroNome)
-        if (!validateEmail(emailNormalizado)) throw new Error('Email inválido')
+        if (!validateEmail(email)) throw new Error('Email inválido')
+        const emailExistente = await AdminModel.findByEmail(email)
+        if (emailExistente) throw new Error('Email já cadastrado')
         const erroSenha = validateString(senha, { min: 6, max: 255, fieldName: 'senha' })
         if (erroSenha) throw new Error(erroSenha)
-        const emailExistente = await AdminModel.findByEmail(emailNormalizado)
-        if (emailExistente) throw new Error('Email já cadastrado')
         const senha_hash = await bcrypt.hash(senha, 10)
 
-        return AdminModel.create({ nome: nomeNormalizado, email: emailNormalizado, senha_hash })
+        return AdminModel.create({ nome, email, senha_hash })
     }
 
     static async updateAdmin(id, data) {
@@ -37,14 +58,15 @@ class AdminService {
         const payload = { ...data }
         if (Object.keys(payload).length === 0) throw new Error('Nenhum dado fornecido para atualização')
         if (payload.nome !== undefined) {
-            const error = validateString(payload.nome, { min: 3, max: 100, fieldName: 'nome' })
+            const nomeNormalizado = payload.nome.trim().toLowerCase()
+            const error = validateString(nomeNormalizado, { min: 3, max: 100, fieldName: 'nome' })
             if (error) throw new Error('Nome inválido')
         }
         if (payload.email !== undefined) {
             if (!validateEmail(payload.email)) throw new Error('Email inválido')
+            const emailExistente = await AdminModel.findByEmail(payload.email)
+            if (emailExistente) throw new Error('Email já cadastrado')
         }
-        const emailExistente = await AdminModel.findByEmail(payload.email)
-        if (emailExistente) throw new Error('Email já cadastrado')
         if (payload.senha !== undefined) {
             const error = validateString(payload.senha, { min: 6, max: 255, fieldName: 'senha' })
             if (error) throw new Error('Senha inválida')

@@ -16,7 +16,7 @@ class ItemModel {
     // Busca um item pelo nome
     static async findByName(nome) {
         const [rows] = await db.query(
-            'SELECT * FROM Item_Cardapio WHERE nome = ?',
+            'SELECT * FROM Item_Cardapio WHERE LOWER(nome) = ?',
             [nome]
         )
         return rows[0]

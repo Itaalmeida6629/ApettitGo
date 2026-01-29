@@ -4,30 +4,13 @@ const validateLogin = require('../utils/validateLogin')
 const bcrypt = require('bcrypt')
 
 class ClientController {
+    // Login do cliente
     static async login(req, res) {
         try {
-            if (!validateLogin(req.body)) {
-                return res.status(400).json({ error: 'Email e senha são obrigatórios' })
-            }
-            const { email, senha } = req.body
-
-            const client = await clientModels.findByEmail(email)
-            if (!client) {
-                return res.status(401).json({ error: 'Cliente não encontrado' })
-            }
-            const senhaValida = await bcrypt.compare(senha, client.senha_hash)
-            if (!senhaValida) {
-                return res.status(401).json({ error: 'Senha inválida' })
-            }
-            res.json({
-                id: client.id,
-                nome: client.nome,
-                email: client.email,
-                telefone: client.telefone
-            })
-        } catch (err) {
-            console.error(err)
-            res.status(500).json({ error: 'Erro ao realizar login' })
+            const result = await clientService.login(req.body)
+            res.json(result)
+        } catch (error) {
+            res.status(401).json({ error: error.message })
         }
     }
 

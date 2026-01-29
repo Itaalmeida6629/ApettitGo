@@ -4,12 +4,37 @@ const validateString = require('../utils/validateString')
 const bcrypt = require('bcrypt')
 
 class ClientService {
+
+    static async loginClient(data) {
+        const erroLogin = validateLogin(data)
+        if (erroLogin) throw new Error(erroLogin)
+        const emailNormalizado = data.email.trim().toLowerCase()
+        if (!validateEmail(emailNormalizado)) {
+            throw new Error('Email inválido')
+        }
+        const client = await clientModel.findByEmail(emailNormalizado)
+        if (!client) {
+            throw new Error('Email ou senha inválidos')
+        }
+        const senhaValida = await bcrypt.compare(data.senha, client.senha_hash)
+        if (!senhaValida) {
+            throw new Error('Email ou senha inválidos')
+        }
+
+        return {
+            id: client.id_cliente,
+            nome: client.nome,
+            email: client.email,
+            telefone: client.telefone
+        }
+    }
+
     static async findAllClients() {
         return clientModel.findAll()
     }
 
     static async findClientById(id) {
-        const client = await clientModel.findByID(id)
+        const client = await clientModel.findById(id)
         if (!client) throw new Error('Cliente não encontrado')
         return client
     }
@@ -18,21 +43,20 @@ class ClientService {
         const { nome, email, senha, telefone } = data
         if (!nome || !email || !senha || !telefone) throw new Error('Campos obrigatórios faltando (nome, email, senha, telefone)')
         const nomeNormalizado = nome.trim().toLowerCase()
-        const emailNormalizado = email.trim().toLowerCase()
         const erroNome = validateString(nomeNormalizado, { min: 3, max: 100, fieldName: 'nome' })
         if (erroNome) throw new Error(erroNome)
-        if (!validateEmail(emailNormalizado)) throw new Error('Email inválido')
+        if (!validateEmail(email)) throw new Error('Email inválido')
+        const emailExistente = await clientModel.findByEmail(email)
+        if (emailExistente) throw new Error('Email já cadastrado')
         const erroTelefone = validateString(telefone, { min: 10, max: 15, fieldName: 'telefone' })
         if (erroTelefone) throw new Error(erroTelefone)
-        const emailExistente = await clientModel.findByEmail(emailNormalizado)
-        if (emailExistente) throw new Error('Email já cadastrado')
         const senhaHash = await bcrypt.hash(senha, 10)
-    
-        return clientModel.create({ nome: nomeNormalizado, email: emailNormalizado, senha_hash: senhaHash, telefone })
+
+        return clientModel.create({ nome, email, senha_hash: senhaHash, telefone })
     }
 
     static async updateClient(id, data) {
-        const notFind = await clientModel.findByID(id)
+        const notFind = await clientModel.findById(id)
         if (!notFind) throw new Error('Cliente não encontrado')
         const payload = { ...data }
         if (Object.keys(payload).length === 0) throw new Error('Nenhum dado fornecido para atualização')
@@ -59,7 +83,7 @@ class ClientService {
     }
 
     static async deleteClient(id) {
-        const notFind = await clientModel.findByID(id)
+        const notFind = await clientModel.findById(id)
         if (!notFind) throw new Error('Cliente não encontrado')
         await clientModel.delete(id)
     }

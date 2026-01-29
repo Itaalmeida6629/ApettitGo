@@ -18,12 +18,14 @@ class CategoryService {
         const nomeNormalizado = nome.trim().toLowerCase()
         const erroNome = validateString(nome, { min: 1, max: 100, fieldName: 'nome' })
         if (erroNome) throw new Error(erroNome)
-        const erroDescricao = validateString(descricao, { min: 1, max: 255, fieldName: 'descricao' })
-        if (erroDescricao) throw new Error(erroDescricao)
         const categoriaExistente = await CategoryModel.findByName(nomeNormalizado)
         if (categoriaExistente) throw new Error('Já existe uma categoria com esse nome')
-    
-        return CategoryModel.create({ nome: nomeNormalizado, descricao }) 
+        const descricaoNormalizada = descricao.trim().toLowerCase()
+        const erroDescricao = validateString(descricaoNormalizada, { min: 1, max: 255, fieldName: 'descricao' })
+        if (erroDescricao) throw new Error(erroDescricao)
+
+
+        return CategoryModel.create({ nome, descricao })
     }
 
     static async updateCategory(id, data) {
@@ -32,15 +34,18 @@ class CategoryService {
         const payload = { ...data }
         if (Object.keys(payload).length === 0) throw new Error('Nenhum dado fornecido para atualização')
         if (payload.nome !== undefined) {
-            const error = validateString(payload.nome, { min: 1, max: 100, fieldName: 'nome' })
+            const nomeNormalizado = payload.nome.trim().toLowerCase()
+            const error = validateString(nomeNormalizado, { min: 1, max: 100, fieldName: 'nome' })
             if (error) throw new Error('Nome inválido')
+            const categoriaExistente = await CategoryModel.findByName(nomeNormalizado)
+            if (categoriaExistente) throw new Error('Já existe uma categoria com esse nome')
         }
         if (payload.descricao !== undefined) {
-            const error = validateString(payload.descricao, { min: 1, max: 255, fieldName: 'descricao' })
+            const descricaoNormalizada = payload.descricao.trim().toLowerCase()
+            const error = validateString(descricaoNormalizada, { min: 1, max: 255, fieldName: 'descricao' })
             if (error) throw new Error('Descrição inválida')
         }
-        const categoriaExistente = await CategoryModel.findByName(payload.nome)
-        if (categoriaExistente) throw new Error('Já existe uma categoria com esse nome')
+
         await CategoryModel.update(id, payload)
     }
 

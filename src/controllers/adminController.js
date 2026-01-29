@@ -4,32 +4,13 @@ const AdminModels = require('../models/adminModels')
 const validateLogin = require('../utils/validateLogin')
 
 class AdminController {
+    // Login do administrador
     static async login(req, res) {
         try {
-            if (!validateLogin(req.body)) {
-                return res.status(400).json({ error: 'Email e senha são obrigatórios' })
-            }
-
-            const { email, senha } = req.body
-
-            const admin = await AdminModels.findByEmail(email)
-            if (!admin) {
-                return res.status(401).json({ error: 'Administrador não encontrado' })
-            }
-
-            const senhaValida = await bcrypt.compare(senha, admin.senha_hash)
-            if (!senhaValida) {
-                return res.status(401).json({ error: 'Senha inválida' })
-            }
-
-            res.json({
-                id: admin.id,
-                nome: admin.nome,
-                email: admin.email
-            })
-        } catch (err) {
-            console.error(err)
-            res.status(500).json({ error: 'Erro ao realizar login' })
+            const result = await AdminService.loginAdmin(req.body)
+            res.json(result)
+        } catch (error) {
+            res.status(401).json({ error: error.message })
         }
     }
 

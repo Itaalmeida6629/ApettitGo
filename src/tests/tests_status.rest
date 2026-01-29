@@ -1,0 +1,59 @@
+### LISTAR TODOS STATUS
+GET http://localhost:3000/statuses
+
+
+### BUSCAR STATUS POR ID
+GET http://localhost:3000/statuses/1
+
+
+### CRIAR STATUS — sucesso
+POST http://localhost:3000/statuses
+Content-Type: application/json
+
+{
+  "nome_status": "pendente"
+}
+
+
+### CRIAR STATUS — ERRO DUPLICADO
+POST http://localhost:3000/statuses
+Content-Type: application/json
+
+{
+  "nome_status": "pendente"
+}
+
+
+### CRIAR STATUS — erro campo vazio
+POST http://localhost:3000/statuses
+Content-Type: application/json
+
+{
+  "nome_status": ""
+}
+
+
+### ATUALIZAR STATUS — sucesso
+PUT http://localhost:3000/statuses/2
+Content-Type: application/json
+
+{
+  "nome_status": "em preparo"
+}
+
+
+### ATUALIZAR STATUS — erro não encontrado
+PUT http://localhost:3000/statuses/999
+Content-Type: application/json
+
+{
+  "nome_status": "teste"
+}
+
+
+### DELETAR STATUS — sucesso
+DELETE http://localhost:3000/statuses/1
+
+
+### DELETAR STATUS — erro não encontrado
+DELETE http://localhost:3000/statuses/999

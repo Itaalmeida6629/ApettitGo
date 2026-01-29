@@ -35,8 +35,8 @@ CREATE TABLE Status_Pedido (
 CREATE TABLE Pedidos (
     id_pedido INT PRIMARY KEY AUTO_INCREMENT,
     id_cliente INT NOT NULL,
-    data_pedido DATETIME NOT NULL,
-    tipo VARCHAR(50),
+    data_pedido DEFAULT CURRENT_TIMESTAMP,
+    tipo ENUM('delivery','retirada','balcao') NOT NULL,
     taxa_entrega DECIMAL(10,2),
     valor_total DECIMAL(10,2),
     id_endereco INT NOT NULL,
@@ -68,6 +68,7 @@ CREATE TABLE Item_Pedido (
     id_item INT NOT NULL,
     quantidade INT NOT NULL,
     preco_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_pedido) REFERENCES Pedidos(id_pedido),
     FOREIGN KEY (id_item) REFERENCES Item_Cardapio(id_item)
 );

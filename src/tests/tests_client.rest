@@ -23,8 +23,8 @@ POST {{baseUrl}}/clients
 Content-Type: application/json
 
 {
-  "nome": "João Duplicado",
-  "email": "joao.silva@email.com",
+  "nome": "João Duplicaddo",
+  "email": "joao.silva@ewmail.com",
   "senha": "senha123",
   "telefone": "11888888888"
 }

@@ -17,19 +17,19 @@ POST {{baseUrl}}
 Content-Type: {{json}}
 
 {
-  "nome": "Hambúrguer Artesanal ao",
-  "descricao": "Hambúrguer 180g com queijo e bacon",
+  "nome": "Chocolate",
+  "descricao": "cambúrguer 180g com queijo e bacon",
   "preco": 29.90,
-  "id_categoria": 3
+  "id_categoria": 4
 }
 
 ############################################
 ### 🔹 ATUALIZAR ITEM (NOME E PREÇO)
-PUT {{baseUrl}}/7
+PUT {{baseUrl}}/13
 Content-Type: {{json}}
 
 {
-  "nome": "Hambúrguer Artesanal Ddao",
+  "nome": "Wwambúrguer Artesanal Ddao",
   "preco": 34.90
 }
 
@@ -39,7 +39,7 @@ PUT {{baseUrl}}/7
 Content-Type: {{json}}
 
 {
-  "descricao": "Hambúrguer duplo 180g com queijo cheddar"
+  "descricao": "hambúrguer duplo 180g com queijo cheddar"
 }
 
 ############################################
@@ -53,5 +53,5 @@ Content-Type: {{json}}
 
 ############################################
 ### 🔹 DELETAR ITEM
-DELETE {{baseUrl}}/7
+DELETE {{baseUrl}}/12
 Accept: {{json}}

@@ -16,7 +16,7 @@ class CategoryModel {
     // Busca uma categoria pelo nome
     static async findByName(nome) {
         const [rows] = await db.query(
-            'SELECT * FROM Categoria WHERE nome = ?',
+            'SELECT * FROM Categoria WHERE LOWER(nome) = ?',
             [nome]
         )
         return rows[0]

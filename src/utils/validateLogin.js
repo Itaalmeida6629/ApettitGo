@@ -1,8 +1,27 @@
-// Valida campos mínimos para login de usuário/administrador
 function validateLogin(body) {
-    if (!body) return false
+    if (!body) {
+        return 'Corpo da requisição é obrigatório'
+    }
+
     const { email, senha } = body
-    return !!email && !!senha
+
+    if (!email) {
+        return 'email é obrigatório'
+    }
+
+    if (!senha) {
+        return 'senha é obrigatória'
+    }
+
+    if (typeof email !== 'string') {
+        return 'email deve ser string'
+    }
+
+    if (typeof senha !== 'string') {
+        return 'senha deve ser string'
+    }
+
+    return null // válido
 }
 
 module.exports = validateLogin
