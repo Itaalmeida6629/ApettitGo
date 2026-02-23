@@ -9,7 +9,7 @@ class ItemModel {
 
     // Busca um item pelo id
     static async findById(id) {
-        const [rows] = await db.query('SELECT id_item AS id, nome, descricao, preco, id_categoria FROM Item_Cardapio WHERE id_item = ? ORDER BY nome ASC', [id])
+        const [rows] = await db.query('SELECT id_item AS id, nome, descricao, preco, id_categoria FROM Item_Cardapio WHERE id_item = ?', [id])
         return rows[0]
     }
 
