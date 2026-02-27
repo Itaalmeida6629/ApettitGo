@@ -1,7 +1,4 @@
 const AdminService = require('../services/adminService')
-const bcrypt = require('bcrypt')
-const AdminModels = require('../models/adminModels')
-const validateLogin = require('../utils/validateLogin')
 
 class AdminController {
     // Login do administrador

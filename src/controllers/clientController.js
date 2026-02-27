@@ -1,7 +1,4 @@
 const clientService = require('../services/clientService')
-const clientModels = require('../models/clientModels')
-const validateLogin = require('../utils/validateLogin')
-const bcrypt = require('bcrypt')
 
 class ClientController {
     // Login do cliente

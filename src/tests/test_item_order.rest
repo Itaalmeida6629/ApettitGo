@@ -1,0 +1,45 @@
+@baseUrl = http://localhost:3000
+@orderId = 3
+@itemOrderId = 1
+
+##################################################
+# 1️⃣ Listar itens de um pedido
+##################################################
+
+GET {{baseUrl}}/item-orders/order/{{orderId}}
+Content-Type: application/json
+
+
+##################################################
+# 2️⃣ Criar item no pedido
+##################################################
+
+POST {{baseUrl}}/item-orders/order/{{orderId}}
+Content-Type: application/json
+
+{
+  "id_item": 2,
+  "quantidade": 3,
+  "preco_unitario": 25.50
+}
+
+
+##################################################
+# 3️⃣ Atualizar item do pedido
+##################################################
+
+PUT {{baseUrl}}/item-orders/{{itemOrderId}}
+Content-Type: application/json
+
+{
+  "quantidade": 5,
+  "preco_unitario": 30.00
+}
+
+
+##################################################
+# 4️⃣ Deletar item do pedido
+##################################################
+
+DELETE {{baseUrl}}/item-orders/{{itemOrderId}}
+Content-Type: application/json

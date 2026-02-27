@@ -32,13 +32,13 @@ CREATE TABLE Status_Pedido (
     nome_status VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE Pedidos (
+CREATE TABLE Pedido (
     id_pedido INT PRIMARY KEY AUTO_INCREMENT,
     id_cliente INT NOT NULL,
     data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
     tipo ENUM('delivery','retirada') NOT NULL,
     taxa_entrega DECIMAL(10,2),
-    valor_total DECIMAL(10,2),
+    valor_total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     id_endereco INT,
     id_status INT NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
@@ -46,7 +46,7 @@ CREATE TABLE Pedidos (
     FOREIGN KEY (id_status) REFERENCES Status_Pedido(id_status)
 );
 
-CREATE TABLE Categorias (
+CREATE TABLE Categoria (
     id_categoria INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(255) NOT NULL
@@ -83,7 +83,7 @@ CREATE TABLE Promocao (
     data_fim DATE NOT NULL
 );
 
-CREATE TABLE Promocao_Itens (
+CREATE TABLE Promocao_Item (
     id_promocao INT NOT NULL,
     id_item INT NOT NULL,
     PRIMARY KEY (id_promocao, id_item),

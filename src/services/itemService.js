@@ -19,14 +19,19 @@ class ItemService {
         const nomeNormalizado = nome.trim().toLowerCase()
         const erroNome = validateString(nomeNormalizado, { min: 1, max: 100, fieldName: 'nome' })
         if (erroNome) throw new Error(erroNome)
+
         const itemExistente = await ItemModel.findByName(nomeNormalizado)
         if (itemExistente) throw new Error('Já existe um item com esse nome')
+
         const descricaoNormalizada = descricao.trim().toLowerCase()
         const erroDescricao = validateString(descricaoNormalizada, { min: 1, max: 255, fieldName: 'descricao' })
         if (erroDescricao) throw new Error(erroDescricao)
+
         const precoNumero = Number(preco)
         if (isNaN(precoNumero) || precoNumero < 0) throw new Error('Preço inválido')
+
         if (!Number.isInteger(id_categoria)) throw new Error('Categoria inválida')
+            
         const categoriaExistente = await CategoryModel.findById(id_categoria)
         if (!categoriaExistente) { throw new Error('Categoria não encontrada') }
 

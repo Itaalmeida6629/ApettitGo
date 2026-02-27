@@ -1,0 +1,114 @@
+############################################
+### BASE URL
+############################################
+
+@baseUrl = http://localhost:3000
+@orderId = 3
+
+############################################
+### LISTAR TODOS OS PEDIDOS
+############################################
+
+GET {{baseUrl}}/orders
+Content-Type: application/json
+
+
+############################################
+### BUSCAR PEDIDO POR ID
+############################################
+
+GET {{baseUrl}}/orders/{{orderId}}
+Content-Type: application/json
+
+
+############################################
+### CRIAR NOVO PEDIDO
+############################################
+
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "id_cliente": 4,
+  "tipo": "DELIVERY",
+  "taxa_entrega": 10.00,
+  "valor_total": 50.00,
+  "id_endereco": 2,
+  "id_status": 4
+}
+
+
+############################################
+### CRIAR PEDIDO COM TAXA ZERO
+############################################
+
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "id_cliente": 2,
+  "tipo": "retirada",
+  "id_status": 3
+}
+
+
+############################################
+### ATUALIZAR PEDIDO (TIPO E TAXA)
+############################################
+
+PUT {{baseUrl}}/orders/{{orderId}}
+Content-Type: application/json
+
+{
+  "tipo": "RETIRADA",
+  "taxa_entrega": 15.50
+}
+
+
+############################################
+### ATUALIZAR STATUS DO PEDIDO
+############################################
+
+PUT {{baseUrl}}/orders/{{orderId}}
+Content-Type: application/json
+
+{
+  "id_status": 2
+}
+
+
+############################################
+### ATUALIZAR VALOR TOTAL
+############################################
+
+PUT {{baseUrl}}/orders/{{orderId}}
+Content-Type: application/json
+
+{
+  "valor_total": 199.99
+}
+
+
+############################################
+### TESTE DE ERRO - ENUM INVÁLIDO
+############################################
+
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "id_cliente": 2,
+  "tipo": "TIPO_INVALIDO",
+  "taxa_entrega": 10.00,
+  "valor_total": 0.00,
+  "id_endereco": 2,
+  "id_status": 1
+}
+
+
+############################################
+### DELETAR PEDIDO
+############################################
+
+DELETE {{baseUrl}}/orders/{{orderId}}
+Content-Type: application/json
