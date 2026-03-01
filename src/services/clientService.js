@@ -1,6 +1,7 @@
 const clientModel = require('../models/clientModels')
 const validateEmail = require('../utils/validateEmail')
 const validateString = require('../utils/validateString')
+const validateLogin = require('../utils/validateLogin')
 const bcrypt = require('bcrypt')
 
 class ClientService {
@@ -8,11 +9,10 @@ class ClientService {
     static async loginClient(data) {
         const erroLogin = validateLogin(data)
         if (erroLogin) throw new Error(erroLogin)
-        const emailNormalizado = data.email.trim().toLowerCase()
-        if (!validateEmail(emailNormalizado)) {
+        if (!validateEmail(data.email)) {
             throw new Error('Email inválido')
         }
-        const client = await clientModel.findByEmail(emailNormalizado)
+        const client = await clientModel.findByEmail(data.email)
         if (!client) {
             throw new Error('Email ou senha inválidos')
         }

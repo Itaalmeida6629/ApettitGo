@@ -32,7 +32,6 @@ Content-Type: application/json
   "id_cliente": 4,
   "tipo": "DELIVERY",
   "taxa_entrega": 10.00,
-  "valor_total": 50.00,
   "id_endereco": 2,
   "id_status": 4
 }

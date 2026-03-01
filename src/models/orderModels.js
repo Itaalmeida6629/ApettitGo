@@ -22,15 +22,16 @@ class OrderModel {
         return result.insertId // Retorna o ID do pedido criado
     }
 
+    // Atualiza o valor total do pedido com base nos itens e taxa de entrega
     static async updateTotalValue(id_pedido) {
         const [rows] = await db.query ('SELECT SUM(subtotal) AS total FROM Item_Pedido WHERE id_pedido = ?',
         [id_pedido])
         
-        const somaItens = Number(rows[0].total) || 0
+        const somaItens = Number(rows[0].total) ?? 0
 
         const [pedidoRows] = await db.query('SELECT taxa_entrega FROM pedido WHERE id_pedido = ?',
         [id_pedido])
-        const taxaEntrega = Number(pedidoRows[0].taxa_entrega) || 0
+        const taxaEntrega = Number(pedidoRows[0].taxa_entrega) ?? 0
 
         const valorTotal = somaItens + taxaEntrega
 

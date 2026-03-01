@@ -1,17 +1,17 @@
 const AdminModel = require('../models/adminModels')
 const validateEmail = require('../utils/validateEmail')
 const validateString = require('../utils/validateString')
+const validateLogin = require('../utils/validateLogin')
 const bcrypt = require('bcrypt')
 
 class AdminService {
     static async loginAdmin(data) {
         const erroLogin = validateLogin(data)
         if (erroLogin) throw new Error(erroLogin)
-        const emailNormalizado = data.email.trim().toLowerCase()
-        if (!validateEmail(emailNormalizado)) {
+        if (!validateEmail(data.email)) {
             throw new Error('Email inválido')
         }
-        const admin = await AdminModel.findByEmail(emailNormalizado)
+        const admin = await AdminModel.findByEmail(data.email)
         if (!admin) {
             throw new Error('Email ou senha inválidos')
         }

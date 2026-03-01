@@ -37,6 +37,23 @@ Content-Type: {{json}}
   "nome": "Updated Test Admin",
   "email": "updatedtestadmin@example.com"
 }
+### Login Admin - Sucesso
+POST {{baseUrl}}/admins/login
+Content-Type: application/json
+
+{
+  "email": "ita@yahoo.com",
+  "senha": "123456"
+}
+
+### Login Admin - Senha Incorreta
+POST {{baseUrl}}/admins/login
+Content-Type: application/json
+
+{
+  "email": "admin@email.com",
+  "senha": "senhaerrada"
+}
 
 ### Deletar administrador - DELETE /admins/:id
 DELETE {{baseUrl}}/admins/2

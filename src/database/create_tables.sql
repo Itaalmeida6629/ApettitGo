@@ -20,7 +20,7 @@ CREATE TABLE Endereco (
     numero VARCHAR(20) NOT NULL,
     bairro VARCHAR(100) NOT NULL,
     cidade VARCHAR(100) NOT NULL,
-    estado VARCHAR(100) NOT NULL,
+    estado VARCHAR(2) NOT NULL,
     cep VARCHAR(20) NOT NULL,
     complemento VARCHAR(150),
     id_cliente INT NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE Item_Cardapio (
     preco DECIMAL(10,2) NOT NULL,
     disponibilidade BOOLEAN DEFAULT TRUE NOT NULL,
     id_categoria INT NOT NULL,
-    FOREIGN KEY (id_categoria) REFERENCES Categorias(id_categoria)
+    FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria)
 );
 
 CREATE TABLE Item_Pedido (
@@ -68,8 +68,8 @@ CREATE TABLE Item_Pedido (
     id_item INT NOT NULL,
     quantidade INT NOT NULL,
     preco_unitario DECIMAL(10,2) NOT NULL,
-    subtotal DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id_pedido),
+    subtotal DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    FOREIGN KEY (id_pedido) REFERENCES Pedido(id_pedido),
     FOREIGN KEY (id_item) REFERENCES Item_Cardapio(id_item)
 );
 
@@ -102,6 +102,6 @@ CREATE TABLE Pedido_Pagamento (
     valor_pago DECIMAL(10,2),
     troco_para DECIMAL(10,2),
     PRIMARY KEY (id_pedido, id_pagamento),
-    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id_pedido),
+    FOREIGN KEY (id_pedido) REFERENCES Pedido(id_pedido),
     FOREIGN KEY (id_pagamento) REFERENCES Forma_Pagamento(id_pagamento)
 );
