@@ -6,8 +6,8 @@ POST {{baseUrl}}/admins
 Content-Type: {{json}}
 
 {
-  "nome": "Itaa",
-  "email": "ita@yahoo.com",
+  "nome": "Ita",
+  "email": "ita@gmail.com",
   "senha": "123456"
 }
 

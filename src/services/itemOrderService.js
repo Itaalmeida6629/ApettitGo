@@ -13,9 +13,9 @@ class ItemOrderService {
         const order = await OrderModel.findById(pedido)
         if (!order) throw new Error('Pedido não encontrado')
 
-        const { id_item, quantidade, preco_unitario } = data
+        const { id_item, quantidade} = data
 
-        if (!id_item || !quantidade || !preco_unitario) throw new Error('Campos obrigatórios faltando (id_pedido, id_item, quantidade, preco_unitario)')
+        if (!id_item || !quantidade) throw new Error('Campos obrigatórios faltando (id_pedido, id_item, quantidade)')
 
         if (!Number.isInteger(id_item)) throw new Error('ID do item inválido')
         const item = await ItemModel.findById(id_item)
@@ -23,11 +23,12 @@ class ItemOrderService {
 
         if (!Number.isInteger(quantidade) || quantidade <= 0) throw new Error('Quantidade inválida')
 
-        if (typeof preco_unitario !== 'number' || preco_unitario < 0) throw new Error('Preço unitário inválido')
+        const precoUnitario = await ItemModel.findPriceById(id_item)
+        if (!precoUnitario) throw new Error('Preço do item não encontrado')
 
-        const subtotal = preco_unitario * quantidade
+        const subtotal = precoUnitario * quantidade
 
-        const created = await ItemOrderModel.create({ id_pedido: pedido, id_item, quantidade, preco_unitario, subtotal })
+        const created = await ItemOrderModel.create({ id_pedido: pedido, id_item, quantidade, preco_unitario: precoUnitario, subtotal: subtotal })
         
         await OrderModel.updateTotalValue(pedido)
 

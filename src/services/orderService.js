@@ -49,25 +49,6 @@ class OrderService {
         return OrderModel.create({ id_cliente, tipo, taxa_entrega: taxaEntregaNumero, id_endereco, id_status })
     }
 
-        static async addItemToOrder(id_pedido, data) {
-        const order = await OrderModel.findById(id_pedido)
-        if (!order) throw new Error('Pedido não encontrado')
-
-        const { id_item, quantidade, preco_unitario, subtotal } = data
-
-        if (!id_item || !quantidade) throw new Error('Campos obrigatórios faltando (id_item, quantidade)')
-
-        if (!Number.isInteger(id_item)) throw new Error('ID do item inválido')
-        const item = await ItemModel.findById(id_item)
-        if (!item) throw new Error('Item não encontrado')
-
-        if (!Number.isInteger(quantidade) || quantidade <= 0) throw new Error('Quantidade inválida')
-
-        if (typeof preco_unitario !== 'number' || preco_unitario < 0) throw new Error('Preço unitário inválido')
-
-        data.subtotal = preco_unitario * quantidade
-        return ItemOrderModel.create({ id_pedido, id_item, quantidade, preco_unitario, subtotal })
-    }
     
     static async updateOrder(id, data) {
         const notFind = await OrderModel.findById(id)

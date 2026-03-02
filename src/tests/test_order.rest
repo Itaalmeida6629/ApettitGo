@@ -29,38 +29,22 @@ POST {{baseUrl}}/orders
 Content-Type: application/json
 
 {
-  "id_cliente": 4,
+  "id_cliente": 1,
   "tipo": "DELIVERY",
   "taxa_entrega": 10.00,
-  "id_endereco": 2,
-  "id_status": 4
+  "id_endereco": 1,
+  "id_status": 1
 }
 
-
 ############################################
-### CRIAR PEDIDO COM TAXA ZERO
-############################################
-
-POST {{baseUrl}}/orders
-Content-Type: application/json
-
-{
-  "id_cliente": 2,
-  "tipo": "retirada",
-  "id_status": 3
-}
-
-
-############################################
-### ATUALIZAR PEDIDO (TIPO E TAXA)
+### ATUALIZAR PEDIDO (TAXA)
 ############################################
 
 PUT {{baseUrl}}/orders/{{orderId}}
 Content-Type: application/json
 
 {
-  "tipo": "RETIRADA",
-  "taxa_entrega": 15.50
+  "taxa_entrega": 15.00
 }
 
 

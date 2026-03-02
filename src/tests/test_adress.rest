@@ -35,7 +35,7 @@ Content-Type: application/json
   "cidade": "Cidade Y",
   "estado": "RJ",
   "cep": "98765-432",
-  "id_cliente": 2
+  "id_cliente": 1
 }
 
 ###

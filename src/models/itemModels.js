@@ -13,6 +13,12 @@ class ItemModel {
         return rows[0]
     }
 
+    // Busca o preço de um item pelo id
+    static async findPriceById(id) {
+        const [rows] = await db.query('SELECT preco FROM Item_Cardapio WHERE id_item = ?', [id])
+        return rows[0] ? rows[0].preco : null
+    }
+
     // Busca um item pelo nome
     static async findByName(nome) {
         const [rows] = await db.query(

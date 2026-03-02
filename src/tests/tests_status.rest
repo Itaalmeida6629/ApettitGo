@@ -11,7 +11,7 @@ POST http://localhost:3000/statuses
 Content-Type: application/json
 
 {
-  "nome_status": "p"
+  "nome_status": "pronto"
 }
 
 

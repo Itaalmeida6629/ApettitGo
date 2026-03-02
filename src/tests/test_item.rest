@@ -17,29 +17,19 @@ POST {{baseUrl}}
 Content-Type: {{json}}
 
 {
-  "nome": "Chocolate",
-  "descricao": "cambúrguer 180g com queijo e bacon",
-  "preco": 29.90,
-  "id_categoria": 4
-}
-
-############################################
-### 🔹 ATUALIZAR ITEM (NOME E PREÇO)
-PUT {{baseUrl}}/13
-Content-Type: {{json}}
-
-{
-  "nome": "Wwambúrguer Artesanal Ddao",
-  "preco": 34.90
+  "nome": "Chocolate Branco",
+  "descricao": "Chocolate Branco",
+  "preco": 15.00,
+  "id_categoria": 1
 }
 
 ############################################
 ### 🔹 ATUALIZAR ITEM (DESCRIÇÃO)
-PUT {{baseUrl}}/7
+PUT {{baseUrl}}/1
 Content-Type: {{json}}
 
 {
-  "descricao": "hambúrguer duplo 180g com queijo cheddar"
+  "preco": 15.00
 }
 
 ############################################

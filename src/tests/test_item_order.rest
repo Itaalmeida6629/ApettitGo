@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000
-@orderId = 3
+@orderId = 1
 @itemOrderId = 1
 
 ##################################################
@@ -18,9 +18,8 @@ POST {{baseUrl}}/item-orders/order/{{orderId}}
 Content-Type: application/json
 
 {
-  "id_item": 2,
-  "quantidade": 3,
-  "preco_unitario": 25.50
+  "id_item": 1,
+  "quantidade": 3
 }
 
 
@@ -32,8 +31,7 @@ PUT {{baseUrl}}/item-orders/{{itemOrderId}}
 Content-Type: application/json
 
 {
-  "quantidade": 5,
-  "preco_unitario": 30.00
+  "quantidade": 5
 }
 
 
